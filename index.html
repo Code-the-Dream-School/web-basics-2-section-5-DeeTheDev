@@ -22,10 +22,10 @@
 
       <!-- player 1 -->
       <div class ="player">
-        <h3> player 1 </h3>
+        <h3> Player 1 </h3>
         <div class = "player_information">
           <Label><b>Name:</b> <p id = "name_player1"></p></Label>  <!-- insert name of the player1  -->
-          <Label>lives: <p id = "ships_player1"></p></Label> <!-- insert ships of the player1  -->
+          <Label><b>Lives:</b> <p id = "ships_player1"></p></Label> <!-- insert ships of the player1  -->
         </div>
         <ul id = "board_player1"></ul>  <!-- board player1  -->
       </div>
@@ -38,12 +38,42 @@
 
       <!-- player 2 -->
       <div class="player">
-        <h3> player 2 </h3>
+        <h3> Player 2 </h3>
         <div class = "player_information">
           <Label><b>Name: </b><p id = "name_player2"></p></Label><!-- insert name of the player2  -->
-          <Label>lives: <p id = "ships_player2"></p></Label><!-- insert ships of the player2  -->
+          <Label><b>Lives:</b> <p id = "ships_player2"></p></Label><!-- insert ships of the player2  -->
         </div>
         <ul id = "board_player2"></ul>  <!-- board player2  -->
+      </div>
+
+      <!-- Modal Popup -->
+      <div class="modal" tabindex="-1" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">
+                <p id="modalMsg">Welcome to the Battleship Game!</p>
+              </h5>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="player1Name">Player 1 Name</label>
+                    <input type="text" class="form-control" id="player1Name" placeholder="Enter Name">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="player2Name">Player 2 Name</label>
+                    <input type="text" class="form-control" id="player2Name" placeholder="Enter Name">
+                  </div>
+                </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" onClick="getNames()" data-dismiss="modal" aria-label="Close">Save changes</button>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>

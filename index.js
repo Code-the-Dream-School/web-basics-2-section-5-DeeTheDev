@@ -20,6 +20,8 @@ let allCells = document.getElementsByClassName("square");
 // Initialize game / Setup
 const game = {};
 game.init = function () {
+    let modal = $(".modal");
+    modal.modal("show");
     gameSetup();
 };
 game.init();
@@ -28,7 +30,7 @@ game.init();
 function gameSetup() {
     // Player class function
     class Player {
-        constructor() {
+        constructor(name) {
             this.name = name;
             this.shipCount = shipCount;
             this.gameBoard = this.genBoard();
@@ -44,12 +46,11 @@ function gameSetup() {
             this.shipCount--;
         }
     }
+    const [p1Name, p2Name] = getNames();
     let shipCount = 0;
     // create players
-    let player1 = new Player();
-    let player2 = new Player();
-    player1.name = prompt("Choose Player1's name.");
-    player2.name = prompt("Choose Player2's name.");
+    let player1 = new Player(p1Name);
+    let player2 = new Player(p2Name);
     player1.isPlaying = true; //first player to play
     // display stats
     displayTurn.textContent = player1.name + "'s Turn";
@@ -58,13 +59,20 @@ function gameSetup() {
 
     //Also generate ships and gamePlayers
     generatePlayersShips(player1, player2);
-    battleShip(2, player2, player1);
     battleShip(1, player1, player2);
+    battleShip(2, player2, player1);
 }
 
 //-------------------------------------------------------------------
 //      HELPER FUNCTIONS
 //-------------------------------------------------------------------
+// Ask for new names function
+function getNames() {
+    let p1Name = document.getElementById("player1Name").value;
+    let p2Name = document.getElementById("player2Name").value;
+    return [p1Name, p2Name];
+}
+
 // Add new random ships to player function
 function addNewShips(player) {
     let maxShips = 4;
@@ -120,7 +128,7 @@ function battleShip(id, player, opponent) {
             //this function adds the click event to each cell
             cell.addEventListener("click", (e) => {
                 let cell = e.target; // get the element clicked
-                hitOrMiss(boardPlayer, cell, player, opponent);
+                hitOrMiss(cell, player, opponent);
                 gameWon(player, opponent);
             });
 
@@ -130,7 +138,7 @@ function battleShip(id, player, opponent) {
     }
 }
 // game battlezone
-function hitOrMiss(boardPlayer, cell, player, opponent) {
+function hitOrMiss(cell, player, opponent) {
     // get player names in variables
     let playerName = player.name;
     // remove all commas and split into array [1,0]
@@ -143,20 +151,21 @@ function hitOrMiss(boardPlayer, cell, player, opponent) {
         console.log(playerName + " is Playing.");
         if (target === 1) {
             player.shipHit();
-            displayLives1.textContent = player.shipCount;
             console.log(playerName + "'s ship count is " + player.shipCount);
             console.log("It's a hit folks!");
             cell.style.backgroundColor = "#ff7272";
+            takeTurn(player, opponent);
         } else {
             cell.style.backgroundColor = "white";
+            takeTurn(player, opponent);
         }
-        takeTurn(player, opponent);
         console.log(xCoord, yCoord);
         console.log(cell.value);
     }
 }
 // function for players to take turns
 function takeTurn(player, opponent) {
+    displayLives1.textContent = player.shipCount;
     // take turns with isPlaying boolean
     player.isPlaying = true;
     opponent.isPlaying = false;
@@ -165,11 +174,11 @@ function takeTurn(player, opponent) {
 function gameWon(p1, p2) {
     let winnerMsg = "";
     if (p1.shipCount === 0) {
-        winnerMsg = "Player " + p2.name + " has won the game!";
+        winnerMsg = "Game Over! " + p2.name + " has won the game!";
         displayTurn.textContent = winnerMsg;
         return true;
     } else if (p2.shipCount === 0) {
-        winnerMsg = "Player " + p1.name + " has won the game!";
+        winnerMsg = "Game Over! " + p1.name + " has won the game!";
         return true;
     }
     return false;

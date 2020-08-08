@@ -23,20 +23,6 @@ li {
     flex-direction: row;
 }
 
-button {
-    background-color: inherit;
-    border: solid;
-    margin-top: 40%;
-    border-radius: 10px;
-    padding: 5px 8px;
-}
-
-button:hover {
-    background-color: black;
-    color: white;
-    border: solid;
-}
-
 .square {
     display: inline-block;
     color: white;
@@ -48,6 +34,7 @@ button:hover {
     border-radius: 5px;
     text-align: center;
     line-height: 60px;
+    cursor: pointer;
 }
 .square:hover {
     opacity: 0.7;
@@ -64,6 +51,7 @@ button:hover {
 
 .player {
     padding: 4%;
+    border-radius: 5px;
     background-color: rgb(58, 126, 255);
     color: white;
 }
@@ -73,4 +61,14 @@ button:hover {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+#turn_player {
+    text-transform: capitalize;
+    max-width: 200px;
+    width: 200px;
+}
+
+.modal {
+    background-color: #3a6fd5;
 }
